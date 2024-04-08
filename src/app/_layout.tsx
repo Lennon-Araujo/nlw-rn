@@ -14,10 +14,9 @@ export default function Layout() {
     Roboto_400Regular
   })
 
-  return (
-    <>
-      <StatusBar style="light" />
-      { fontsLoaded ? <Slot /> : <Loading />}
-    </>
-  )
+  if(!fontsLoaded) {
+    return <Loading />
+  }
+
+  return <Slot />
 }
