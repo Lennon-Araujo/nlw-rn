@@ -1,12 +1,22 @@
-import { Image, StatusBar, View } from 'react-native'
+import { Alert, Image, StatusBar, View } from 'react-native'
 import { FontAwesome6, MaterialIcons } from '@expo/vector-icons'
 
 import { Input } from '@/components/input'
 import { colors } from '@/styles/colors'
 import { Button } from '@/components/button'
 import { Link } from 'expo-router'
+import { useState } from 'react'
 
 export default function Register() {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+
+  function handleRegister() {
+    if(!name.trim() || !email.trim()) {
+      return Alert.alert('Inscrição', "Informe todos os dados de acesso")
+    }
+  }
+
   return (
     <View className='flex-1 bg-green-500 items-center justify-center p-8'>
       <StatusBar barStyle="light-content" />
@@ -19,7 +29,7 @@ export default function Register() {
             color={colors.green[200]}
             size={20}
           />
-          <Input.Field placeholder='Nome completo' />
+          <Input.Field placeholder='Nome completo' onChangeText={setName} />
         </Input>
 
         <Input>
@@ -28,12 +38,12 @@ export default function Register() {
             color={colors.green[200]}
             size={20}
           />
-          <Input.Field placeholder='E-mail' keyboardType='email-address' />
+          <Input.Field placeholder='E-mail' keyboardType='email-address' onChangeText={setEmail} />
         </Input>
 
-        <Button title='Acessar credencial' />
+        <Button title='Acessar credencial' onPress={handleRegister} />
 
-        <Link href='/' className='text-gray-100 text-base font-bold text-center mt-8'>Já possui ingresso?</Link>
+        <Link href='/' className='text-gray-100 text-base font-bold text-center mt-8'>Já possui ingresso? {name}</Link>
       </View>
     </View>
   )

@@ -1,18 +1,13 @@
-import { ActivityIndicator, Pressable, Text, PressableProps } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
 
-type ButtonProps = PressableProps & {
+type ButtonProps = TouchableOpacityProps & {
   title: string
   isLoading?: boolean
 }
 
 export function Button({ title, isLoading = false, ...rest }: ButtonProps) {
-
-  function toogleColor() {
-
-  }
-
   return (
-    <Pressable
+    <TouchableOpacity
       disabled={isLoading}
       className="w-full h-14 bg-orange-500 items-center justify-center rounded-lg active:opacity-70"
       {...rest}
@@ -26,6 +21,6 @@ export function Button({ title, isLoading = false, ...rest }: ButtonProps) {
           </Text>
         )
       }
-    </Pressable>
+    </TouchableOpacity>
   )
 }
