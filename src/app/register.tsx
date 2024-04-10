@@ -11,7 +11,7 @@ export default function Register() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
 
-  function handleRegister() {
+  function handleRegister() { 
     if(!name.trim() || !email.trim()) {
       return Alert.alert('Inscrição', "Informe todos os dados de acesso")
     }
@@ -43,7 +43,7 @@ export default function Register() {
 
         <Button title='Acessar credencial' onPress={handleRegister} />
 
-        <Link href='/' className='text-gray-100 text-base font-bold text-center mt-8'>Já possui ingresso? {name}</Link>
+        <Link href='/' className='text-gray-100 text-base font-bold text-center mt-8'>Já possui ingresso?</Link>
       </View>
     </View>
   )

@@ -6,6 +6,7 @@ import { Slot } from "expo-router";
 import { Loading } from "@/components/loading";
 
 import { useFonts, Roboto_700Bold, Roboto_500Medium, Roboto_400Regular } from "@expo-google-fonts/roboto";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -18,5 +19,9 @@ export default function Layout() {
     return <Loading />
   }
 
-  return <Slot />
+  return (
+    <GestureHandlerRootView style={{flex: 1}}>
+      <Slot />
+    </GestureHandlerRootView>
+  )
 }

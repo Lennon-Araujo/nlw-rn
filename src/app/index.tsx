@@ -11,8 +11,6 @@ export default function Home() {
   const [accessCode, setAccessCode] = useState<string>('')
 
   function handleAccessCredential() {
-    console.log(accessCode);
-    
     if(!accessCode.trim()) {
       return Alert.alert('Credencial', "Informe o código do ingresso")
     }
@@ -33,7 +31,7 @@ export default function Home() {
           <Input.Field placeholder='Código de acesso' onChangeText={setAccessCode} />
         </Input>
 
-        <Button title='Acessar credencial' onPress={handleAccessCredential} />
+        <Button title='Acessar credencial' onPress={() => handleAccessCredential()} />
 
         <Link href='/register' className='text-gray-100 text-base font-bold text-center mt-8'>Ainda não possui ingresso?</Link>
       </View>
