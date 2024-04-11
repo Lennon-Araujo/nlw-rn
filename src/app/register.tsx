@@ -4,7 +4,7 @@ import { FontAwesome6, MaterialIcons } from '@expo/vector-icons'
 import { Input } from '@/components/input'
 import { colors } from '@/styles/colors'
 import { Button } from '@/components/button'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { useState } from 'react'
 
 export default function Register() {
@@ -15,6 +15,8 @@ export default function Register() {
     if(!name.trim() || !email.trim()) {
       return Alert.alert('Inscrição', "Informe todos os dados de acesso")
     }
+
+    router.push('/ticket')
   }
 
   return (
@@ -41,7 +43,7 @@ export default function Register() {
           <Input.Field placeholder='E-mail' keyboardType='email-address' onChangeText={setEmail} />
         </Input>
 
-        <Button title='Acessar credencial' onPress={handleRegister} />
+        <Button title='Realizar inscrição' onPress={handleRegister} />
 
         <Link href='/' className='text-gray-100 text-base font-bold text-center mt-8'>Já possui ingresso?</Link>
       </View>
