@@ -1,15 +1,17 @@
-import { colors } from "@/styles/colors";
-import { Feather } from "@expo/vector-icons";
 import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
+
+import { colors } from "@/styles/colors";
 import { QRCode } from "@/components/qrcode";
+import { BadgeStore } from "@/store/badge-store";
 
 type CredentialProps = {
-  image?: string
+  data: BadgeStore
   onChangeAvatar?: () => void
   onShowQRCode?: () => void
 }
 
-export function Credential({onChangeAvatar, onShowQRCode ,image}: CredentialProps) {
+export function Credential({onChangeAvatar, onShowQRCode, data}: CredentialProps) {
   return (
     <View className="w-full self-stretch items-center">
       <Image
@@ -23,18 +25,18 @@ export function Credential({onChangeAvatar, onShowQRCode ,image}: CredentialProp
           className="px-5 py-8 h-40 items-center self-stretch border-b border-white/10 overflow-hidden"
         >
           <View className="w-full flex-row items-center justify-between">
-            <Text className="text-zinc-50 text-sm font-bold">Unite summit</Text>
-            <Text className="text-zinc-50 text-sm font-bold">#123</Text>
+            <Text className="text-zinc-50 text-sm font-bold">{data.eventTitle}</Text>
+            <Text className="text-zinc-50 text-sm font-bold">#{data.attendeeId}</Text>
           </View>
 
           <View className="w-40 h-40 bg-black rounded-full" />
         </ImageBackground>
 
         {
-          image ? (
+          data.image ? (
             <TouchableOpacity activeOpacity={0.9} onPress={onChangeAvatar}>
               <Image
-              source={{ uri: image }}
+              source={{ uri: data.image }}
               className="w-36 h-36 rounded-full -mt-24"
             />
             </TouchableOpacity>
@@ -48,15 +50,15 @@ export function Credential({onChangeAvatar, onShowQRCode ,image}: CredentialProp
         }
 
         <Text className="font-bold text-2xl text-zinc-50 mt-4">
-          Lennon Araújo
+          {data.name}
         </Text>
 
         <Text className="font-regular text-base text-zinc-300 mb-4">
-          lennon@gmail.com
+          {data.email}
         </Text>
 
         <QRCode
-          value="teste"
+          value={data.checkInURL}
           size={120}
         />
 

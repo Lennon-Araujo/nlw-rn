@@ -1,19 +1,40 @@
-import { Alert, GestureResponderEvent, Image, StatusBar, View } from 'react-native'
+import { useState } from 'react'
+import { Alert, Image, StatusBar, View } from 'react-native'
+import { Link, Redirect } from 'expo-router'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-import { Input } from '@/components/input'
+import { api } from '@/server/api'
+
 import { colors } from '@/styles/colors'
+import { Input } from '@/components/input'
 import { Button } from '@/components/button'
-import { Link } from 'expo-router'
-import { useState } from 'react'
+import { useBadgeStore } from '@/store/badge-store'
 
 export default function Home() {
-  const [accessCode, setAccessCode] = useState<string>('')
+  const [accessCode, setAccessCode] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  function handleAccessCredential() {
-    if(!accessCode.trim()) {
-      return Alert.alert('Credencial', "Informe o código do ingresso")
+  const badgeStore = useBadgeStore()
+
+  async function handleAccessCredential() {
+    try {
+      if(!accessCode.trim()) {
+        return Alert.alert('Credencial', "Informe o código do ingresso")
+      }
+      setIsLoading(true)
+
+      const { data } = await api.get(`/attendees/${accessCode}/badge`)
+      badgeStore.save(data.badge)
+      
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false)
+      Alert.alert("Ingresso", "Ingresso não encontrado")
     }
+  }
+
+  if(badgeStore.data?.checkInURL) {
+    return <Redirect href="/ticket" />
   }
 
   return (
@@ -31,7 +52,7 @@ export default function Home() {
           <Input.Field placeholder='Código de acesso' onChangeText={setAccessCode} />
         </Input>
 
-        <Button title='Acessar credencial' onPress={() => handleAccessCredential()} />
+        <Button title='Acessar credencial' isLoading={isLoading} onPress={() => handleAccessCredential()} />
 
         <Link href='/register' className='text-gray-100 text-base font-bold text-center mt-8'>Ainda não possui ingresso?</Link>
       </View>

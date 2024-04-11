@@ -17,7 +17,7 @@ function Input({ children }: InputProps) {
 function Field({ ...rest }: TextInputProps) {
   return (
     <TextInput
-      className="flex-1 text-white text-base font-regular"
+      className="flex-1 text-white text-base leading-5 font-regular"
       placeholderTextColor={colors.gray[200]}
       {...rest}
     />
