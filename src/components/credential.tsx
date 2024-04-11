@@ -1,7 +1,13 @@
-import { Image, ImageBackground, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { colors } from "@/styles/colors";
+import { Feather } from "@expo/vector-icons";
+import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 
-export function Credential() {
+type CredentialProps = {
+  image?: string
+  onChangeAvatar?: () => void
+}
+
+export function Credential({onChangeAvatar, image}: CredentialProps) {
   return (
     <View className="w-full self-stretch items-center">
       <Image
@@ -22,10 +28,22 @@ export function Credential() {
           <View className="w-40 h-40 bg-black rounded-full" />
         </ImageBackground>
 
-        <Image
-          source={{ uri:"https://github.com/lennon-araujo.png" }}
-          className="w-36 h-36 rounded-full -mt-24"
-        />
+        {
+          image ? (
+            <TouchableOpacity activeOpacity={0.9} onPress={onChangeAvatar}>
+              <Image
+              source={{ uri: image }}
+              className="w-36 h-36 rounded-full -mt-24"
+            />
+            </TouchableOpacity>
+        )
+        : (
+          <TouchableOpacity activeOpacity={0.9} onPress={onChangeAvatar} className="w-36 h-36 rounded-full -mt-24 bg-gray-400 items-center justify-center">
+              <Feather name="camera" color={colors.green[400]} size={32} />
+          </TouchableOpacity>
+        )
+        
+        }
 
         <Text className="font-bold text-2xl text-zinc-50 mt-4">
           Lennon Araújo
@@ -40,12 +58,10 @@ export function Credential() {
           className="w-32 h-32"
         />
 
-        <TouchableOpacity activeOpacity={0.7}>
-          <View className="mt-6">
-            <Text className="font-bold text-orange-500 text-sm">
-              Ampliar QRCode
-            </Text>
-          </View>
+        <TouchableOpacity activeOpacity={0.7} className="mt-6">
+          <Text className="font-bold text-orange-500 text-sm">
+            Ampliar QRCode
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
